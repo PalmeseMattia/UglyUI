@@ -16,7 +16,7 @@ typedef struct{
 
 }EventLoop;
 
-void initEventLoop(EventLoop* loop);
+void init_event_loop(EventLoop* loop);
 void push_event(EventLoop* loop, Event event);
 void clear_events(EventLoop *loop);
 #endif // !EVENT_LOOP_H
