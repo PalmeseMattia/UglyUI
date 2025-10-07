@@ -30,6 +30,8 @@ int isKeyboardReady(){
 }
 
 void process_input(EventLoop *loop, void *handler){
+  ugly_bool pushed;
+
   if(isKeyboardReady()){
     char ch = getchar();
     KeyboardEvent *keyData = malloc(sizeof(KeyboardEvent));
@@ -39,6 +41,9 @@ void process_input(EventLoop *loop, void *handler){
     Event *event = (Event *) calloc(1, sizeof(Event));
     event -> handler = handler;
     event -> arg = keyData;
-    push_event(loop, event);
+    pushed = push_event(loop, event);
+    if (!pushed) {
+      fprintf(stderr, "Ha cagato\n");
+    }
   }
 }
