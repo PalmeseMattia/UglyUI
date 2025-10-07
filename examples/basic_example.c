@@ -12,20 +12,19 @@ void key_handler(int event_id, void *data){
 }
 
 int main() {
-  EventLoop eventLoop;
-  init_event_loop(&eventLoop);
+  EventLoop *eventLoop;
+  
+  eventLoop = new_event_loop(4);
   set_raw_mode(1);
 
   while(1){
-    process_input(&eventLoop, key_handler);
+    process_input(eventLoop, &key_handler);
 
-
-
-    for (size_t i = 0; i<eventLoop.size; i++){
-      Event event = eventLoop.events[i];
-      event.handler(i,event.arg);
+    for (size_t i = 0; i < eventLoop -> size; i++){
+      Event *event = eventLoop -> events[i];
+      event -> handler(i, event -> arg);
     }
-
-    clear_events(&eventLoop);
+    clear_events(eventLoop);
   }
+  free(eventLoop);
 }

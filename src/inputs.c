@@ -26,7 +26,7 @@ int isKeyboardReady(){
   FD_ZERO(&readfds);
   FD_SET(STDIN_FILENO, &readfds);
   int result = select(STDIN_FILENO+1, &readfds, NULL, NULL, &timeout);
-  return (result>0&&FD_ISSET(STDIN_FILENO,&readfds));
+  return (result > 0 && FD_ISSET(STDIN_FILENO, &readfds));
 }
 
 void process_input(EventLoop *loop, void *handler){
@@ -36,10 +36,9 @@ void process_input(EventLoop *loop, void *handler){
     keyData->character = ch;
     keyData->type = KEY_PRESS;
 
-    Event event = {
-      .handler=handler,
-      .arg = keyData
-    };
+    Event *event = (Event *) calloc(1, sizeof(Event));
+    event -> handler = handler;
+    event -> arg = keyData;
     push_event(loop, event);
   }
 }
