@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <string.h>
+#include <errno.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/select.h>
@@ -15,6 +17,10 @@ int main() {
   EventLoop *eventLoop;
   
   eventLoop = new_event_loop(4);
+  if (eventLoop == NULL) {
+    fprintf(stderr, "Event Loop allocation failed. Code %d: %s\n", errno, strerror(errno));
+    return (1);
+  }
   set_raw_mode(1);
 
   while(1){
@@ -26,5 +32,5 @@ int main() {
     }
     clear_events(eventLoop);
   }
-  free(eventLoop);
+  free_event_loop(eventLoop);
 }

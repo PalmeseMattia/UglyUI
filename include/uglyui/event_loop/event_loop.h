@@ -24,6 +24,7 @@ typedef struct{
 } EventLoop;
 
 EventLoop *new_event_loop(size_t initial_capacity);
+void free_event_loop(EventLoop *event_loop);
 void init_event_loop(EventLoop* loop);
 ugly_bool push_event(EventLoop *loop, Event *event);
 void clear_events(EventLoop *loop);
